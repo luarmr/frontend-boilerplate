@@ -1,0 +1,64 @@
+{
+  "presets": [
+    ["@babel/preset-env", {
+      "targets": {
+        "browsers": ["last 2 versions", "safari > 8", "not ie < 11"]
+      }
+    }],
+    "@babel/preset-react",
+  ],
+  "plugins": [
+    ["module-resolver", {
+      "root": ["./app"]
+    }],
+    ["@babel/plugin-proposal-decorators", { "legacy": true }],
+    ["@babel/plugin-proposal-class-properties", { "loose": true }],
+    "@babel/plugin-proposal-object-rest-spread",
+    "@babel/plugin-syntax-dynamic-import",
+  ],
+  "env": {
+    "development": {
+      "plugins": [
+        "react-hot-loader/babel",
+        ["babel-plugin-react-css-modules", {
+          "generateScopedName": "[path]-[name]_[local]_[hash:base64:5]",
+          "webpackHotModuleReloading": true,
+          "filetypes": {
+            ".sass": {
+              "syntax": "postcss-sass"
+            }
+          },
+          "exclude": "app/stylesheets/global.sass"
+        }]
+      ]
+    },
+    "production": {
+      "plugins": [
+        "transform-react-remove-prop-types",
+        ["react-remove-properties", {"properties": ["data-test", "data-testid", "data-test-id"]}],
+        ["babel-plugin-react-css-modules", {
+          "generateScopedName": "[name]-[local]-[hash:base64:6]",
+          "filetypes": {
+            ".sass": {
+              "syntax": "postcss-sass"
+            }
+          },
+          "exclude": "app/stylesheets/global.sass"
+        }]
+      ]
+    },
+    "test": {
+      "plugins": [
+        ["babel-plugin-react-css-modules", {
+          "generateScopedName": "[name]-[local]",
+          "filetypes": {
+            ".sass": {
+              "syntax": "postcss-sass"
+            }
+          },
+          "exclude": "app/stylesheets/global.sass"
+        }]
+      ]
+    }
+  }
+}
